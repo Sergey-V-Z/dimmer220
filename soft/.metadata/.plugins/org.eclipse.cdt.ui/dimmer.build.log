@@ -1,0 +1,10 @@
+00:13:18 **** Incremental Build of configuration Debug for project dimmer ****
+make -j8 all 
+arm-none-eabi-size   dimmer.elf 
+   text	   data	    bss	    dec	    hex	filename
+  10184	     20	   1780	  11984	   2ed0	dimmer.elf
+Finished building: default.size.stdout
+ 
+
+00:13:18 Build Finished. 0 errors, 0 warnings. (took 469ms)
+

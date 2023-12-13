@@ -1,0 +1,11 @@
+Output: Generates pick and place files
+Type  : Pick Place
+From  : Variant [[No Variations]] of PCB Document [dimmer.PcbDoc]
+   Generated File[Pick Place for dimmer.txt]
+   Generated File[Pick Place for dimmer.csv]
+
+
+Files Generated   : 2
+Documents Printed : 0
+
+Finished Output Generation At 13:26:51 On 24.11.2023

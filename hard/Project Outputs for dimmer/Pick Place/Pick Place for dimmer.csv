@@ -1,0 +1,67 @@
+Altium Designer Pick and Place Locations
+D:\Radio\Jobe\dimmer220\Project Outputs for dimmer\Pick Place\Pick Place for dimmer.csv
+
+========================================================================================================================
+File Design Information:
+
+Date:       24.11.23
+Time:       13:26
+Revision:   Not in VersionControl
+Variant:    No variations
+Units used: mm
+
+"Designator","Comment","Layer","Center-X(mm)","Center-Y(mm)","Rotation","Description"
+"H1","Hole","TopLayer","29.9500mm","4.9750mm","0",""
+"PS1","K7805-500R3","TopLayer","16.0750mm","65.5250mm","270","Linear Regulator Replacement DC DC Converter 1 Output 5V, -5V - - - 500mA, 300mA 6.5V, 7V - 36V, 31V Input"
+"X2","PLS-5 2.54","TopLayer","30.6500mm","54.0600mm","90","Header, 5-Pin"
+"X1","PLS-5 2.54","TopLayer","7.1400mm","51.3750mm","360","Header, 5-Pin"
+"VR1","LM1117MPX-3.3","TopLayer","17.7750mm","55.6250mm","180","800-mA 3.3-V linear voltage regulator"
+"VD2","0805 G","TopLayer","30.3000mm","46.2250mm","360","Green"
+"VD1","0805 G","TopLayer","30.2750mm","44.6000mm","360","Green"
+"U2","MOC3023","TopLayer","5.7000mm","38.5500mm","270","Optoisolator Triac Output 5300Vrms 1 Channel 6-DIP"
+"U1","STM32F030F4P6","TopLayer","21.1750mm","47.8750mm","180","MCU 32-bit STM32F ARM Cortex M0 RISC 16KB Flash 2.5V/3.3V 20-Pin TSSOP Tray"
+"R29","1206 36k","BottomLayer","12.4250mm","24.8500mm","270","Resistor"
+"R28","1206 36k","BottomLayer","12.4250mm","30.3250mm","270","Resistor"
+"R27","0402 10K","TopLayer","15.9063mm","48.2313mm","360","Resistor"
+"R26","1206 36k","TopLayer","12.9000mm","24.8750mm","270","Resistor"
+"R25","1206 36k","TopLayer","12.9000mm","30.3250mm","270","Resistor"
+"R24","1206 10 R","BottomLayer","26.2750mm","17.4750mm","90","Resistor"
+"R23","1206 10 R","BottomLayer","26.2750mm","11.6500mm","270","Resistor"
+"R19","0402 430 R","TopLayer","8.4000mm","45.7750mm","90","Resistor"
+"R18","1206 10 R","BottomLayer","26.2750mm","5.8250mm","270","Resistor"
+"R17","1206 10 R","BottomLayer","26.2750mm","23.3000mm","90","Resistor"
+"R16","1206 47 R","TopLayer","19.7500mm","32.7000mm","270","Resistor"
+"R15","1206 47 R","TopLayer","22.9167mm","32.7000mm","90","Resistor"
+"R14","1206 169 R","BottomLayer","22.8000mm","5.8250mm","90","Resistor"
+"R13","1206 169 R","BottomLayer","22.8000mm","11.6500mm","90","Resistor"
+"R12","1206 169 R","BottomLayer","22.8000mm","17.4750mm","90","Resistor"
+"R11","1206 169 R","BottomLayer","22.8000mm","23.3000mm","90","Resistor"
+"R10","1206 47 R","TopLayer","29.2500mm","32.7000mm","90","Resistor"
+"R9","1206 47 R","TopLayer","26.0833mm","32.7000mm","270","Resistor"
+"R8","0402 3K","TopLayer","27.0250mm","46.2500mm","0","Resistor"
+"R7","0402 3K","TopLayer","27.0500mm","44.6000mm","0","Resistor"
+"R6","0402 10K","TopLayer","27.0500mm","43.0250mm","0","Resistor"
+"R5","0402 10 R","BottomLayer","23.6750mm","68.4250mm","270","Resistor"
+"R4","0402 0","BottomLayer","25.6250mm","66.4750mm","180","Resistor"
+"R3","0402 10 R","BottomLayer","26.9250mm","68.4000mm","270","Resistor"
+"R2","0402 10K","TopLayer","26.4250mm","48.1000mm","90","Resistor"
+"R1","1206 10 R","BottomLayer","30.0250mm","67.3500mm","270","Resistor"
+"Q1","BTA06-600BRG","TopLayer","10.1600mm","19.6000mm","180","TRIAC Standard 600V 6A Through Hole TO-220AB"
+"OK1","PC814","TopLayer","13.7250mm","38.6500mm","0","#10-32 Round Head Machine Screw Slotted Drive Nylon"
+"J5","TB003-500-P02BE","TopLayer","6.2000mm","81.2500mm","0","2~24 Poles, Screw Type, Horizontal, 5.0 Pitch, 26~14 _AWG_, Terminal Block Connector"
+"J4","TB003-500-P02BE","TopLayer","16.1750mm","5.6500mm","180","2~24 Poles, Screw Type, Horizontal, 5.0 Pitch, 26~14 _AWG_, Terminal Block Connector"
+"J3","TB003-500-P02BE","TopLayer","6.2000mm","5.6500mm","180","2~24 Poles, Screw Type, Horizontal, 5.0 Pitch, 26~14 _AWG_, Terminal Block Connector"
+"J2","TB003-500-P02BE","TopLayer","26.2000mm","81.2500mm","0","2~24 Poles, Screw Type, Horizontal, 5.0 Pitch, 26~14 _AWG_, Terminal Block Connector"
+"J1","TB003-500-P02BE","TopLayer","16.2000mm","81.2500mm","0","2~24 Poles, Screw Type, Horizontal, 5.0 Pitch, 26~14 _AWG_, Terminal Block Connector"
+"D5","MBRS540T3G","TopLayer","5.9750mm","68.8000mm","180","Diode Schottky 40V 5A Surface Mount SMC"
+"D3","SMAJ36CA","TopLayer","23.8776mm","67.9500mm","270",""
+"D2","SMAJ36CA","TopLayer","27.0250mm","67.9500mm","270",""
+"D1","SMAJ36CA","TopLayer","30.1500mm","67.9500mm","270",""
+"C10","0.047","TopLayer","24.6500mm","26.3000mm","180",""
+"C9","0.01","TopLayer","24.6500mm","20.3000mm","360",""
+"C7","18112 4.7 uF","TopLayer","25.2750mm","61.5750mm","180","Ceramic Capacitor"
+"C6","470µF 35V","TopLayer","6.9250mm","59.8000mm","180","EEEFK1V471SV 470µF 35V Aluminum Electrolytic Capacitors Radial, Can - SMD 80mOhm @ 100kHz 2000 Hrs @ 105°C"
+"C4","18112 4.7 uF","TopLayer","25.8000mm","55.3000mm","360","Ceramic Capacitor"
+"C3","0603 0.1 uF","TopLayer","27.9750mm","49.6000mm","270","Ceramic Capacitor"
+"C2","0603 0.1 uF","TopLayer","23.7500mm","43.1250mm","0","Ceramic Capacitor"
+"C1","0603 0.1 uF","TopLayer","19.1500mm","43.1250mm","180","Ceramic Capacitor"
