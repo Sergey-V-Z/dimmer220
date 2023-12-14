@@ -32,6 +32,15 @@
 #define TIME_OUT_DS18B20_Read 1000
 //#define TIME_OUT_DIMMER 1000
 #define TIME_OUT_DIMMER_PULSE 1
+
+#define PERIOD_US 10000		// 10 ms
+#define DELAY_PULSE_US 1000 // 1 ms
+#define FAN_0 10000;		// 0 %
+#define FAN_20 8000;		// 20 %
+#define FAN_40 6000;		// 40 %
+#define FAN_60 4000;		// 60 %
+#define FAN_80 2000;		// 80 %
+#define FAN_100 5;		// 100 %
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -47,13 +56,14 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint8_t flag_Dimer_Start = 0;
+uint8_t flag_pulse_Start = 0;
 
-float Temperature = 0;
+float Temperature = 0.0;
 uint8_t Presence = 0;
 uint8_t Temp_byte1, Temp_byte2;
 uint16_t TEMP;
-uint16_t setTEMP;
+float setTEMP = 25.0;
+float stepTemp = 3.0;
 
 uint32_t oldTime = 0;
 uint32_t time = 0;
@@ -67,6 +77,7 @@ uint32_t time_Dimmer = 0;
 //uint32_t time_Dimmer_Pulse = 0;
 uint32_t time_out_dimmer = 20; // 20 mS не включается семистор 0 включен постоянно
 uint8_t event_dimmer = 0;
+uint32_t delay_dimm_us = 5000; // 10000 us = 10 ms
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -77,6 +88,24 @@ void SystemClock_Config(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+void Set_Pin_Output (GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
+{
+	GPIO_InitTypeDef GPIO_InitStruct = {0};
+	GPIO_InitStruct.Pin = GPIO_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_OUTPUT_PP;
+	GPIO_InitStruct.Speed = GPIO_SPEED_FREQ_LOW;
+	HAL_GPIO_Init(GPIOx, &GPIO_InitStruct);
+}
+
+void Set_Pin_Input (GPIO_TypeDef *GPIOx, uint16_t GPIO_Pin)
+{
+	GPIO_InitTypeDef GPIO_InitStruct = {0};
+	GPIO_InitStruct.Pin = GPIO_Pin;
+	GPIO_InitStruct.Mode = GPIO_MODE_INPUT;
+	GPIO_InitStruct.Pull = GPIO_PULLUP;
+	HAL_GPIO_Init(GPIOx, &GPIO_InitStruct);
+}
+
 void delay(uint16_t time) {
 	/* change your code here for the delay in microseconds */
 	__HAL_TIM_SET_COUNTER(&htim16, 0);
@@ -84,66 +113,75 @@ void delay(uint16_t time) {
 		;
 }
 
-#define DS18B20_PORT_IN GPIOA
-#define DS18B20_PIN_IN GPIO_PIN_1
-#define DS18B20_PORT_OUT GPIOA
-#define DS18B20_PIN_OUT GPIO_PIN_1
-
-uint8_t DS18B20_Start(void) {
+uint8_t DS18B20_Start (void)
+{
 	uint8_t Response = 0;
-	HAL_GPIO_WritePin(TX_1W_GPIO_Port, TX_1W_Pin, 0);  // pull the pin low
-	delay(480);   // delay according to datasheet
+	Set_Pin_Output(TX_1W_GPIO_Port, TX_1W_Pin);   // set the pin as output
+	HAL_GPIO_WritePin (TX_1W_GPIO_Port, TX_1W_Pin, 0);  // pull the pin low
+	delay (480);   // delay according to datasheet
 
-	delay(80);    // delay according to datasheet
+	Set_Pin_Input(TX_1W_GPIO_Port, TX_1W_Pin);    // set the pin as input
+	delay (80);    // delay according to datasheet
 
-	if (!(HAL_GPIO_ReadPin(RX_1W_GPIO_Port, RX_1W_Pin)))
-		Response = 1;    // if the pin is low i.e the presence pulse is detected
-	else
-		Response = -1;
+	if (!(HAL_GPIO_ReadPin (TX_1W_GPIO_Port, TX_1W_Pin))) Response = 1;    // if the pin is low i.e the presence pulse is detected
+	else Response = -1;
 
-	delay(400); // 480 us delay totally.
+	delay (400); // 480 us delay totally.
 
 	return Response;
 }
 
-void DS18B20_Write(uint8_t data) {
+void DS18B20_Write (uint8_t data)
+{
+	Set_Pin_Output(TX_1W_GPIO_Port, TX_1W_Pin);  // set as output
 
-	for (int i = 0; i < 8; i++) {
+	for (int i=0; i<8; i++)
+	{
 
-		if ((data & (1 << i)) != 0)  // if the bit is high
-				{
+		if ((data & (1<<i))!=0)  // if the bit is high
+		{
 			// write 1
 
-			HAL_GPIO_WritePin(TX_1W_GPIO_Port, TX_1W_Pin, 0); // pull the pin LOW
-			delay(1);  // wait for 1 us
+			Set_Pin_Output(TX_1W_GPIO_Port, TX_1W_Pin);  // set as output
+			HAL_GPIO_WritePin (TX_1W_GPIO_Port, TX_1W_Pin, 0);  // pull the pin LOW
+			delay (1);  // wait for 1 us
 
-			delay(50);  // wait for 60 us
+			Set_Pin_Input(TX_1W_GPIO_Port, TX_1W_Pin);  // set as input
+			delay (50);  // wait for 60 us
 		}
 
 		else  // if the bit is low
 		{
 			// write 0
 
-			HAL_GPIO_WritePin(TX_1W_GPIO_Port, TX_1W_Pin, 0); // pull the pin LOW
-			delay(50);  // wait for 60 us
+			Set_Pin_Output(TX_1W_GPIO_Port, TX_1W_Pin);
+			HAL_GPIO_WritePin (TX_1W_GPIO_Port, TX_1W_Pin, 0);  // pull the pin LOW
+			delay (50);  // wait for 60 us
 
+			Set_Pin_Input(TX_1W_GPIO_Port, TX_1W_Pin);
 		}
 	}
 }
 
-uint8_t DS18B20_Read(void) {
-	uint8_t value = 0;
+uint8_t DS18B20_Read (void)
+{
+	uint8_t value=0;
 
-	for (int i = 0; i < 8; i++) {
+	Set_Pin_Input(TX_1W_GPIO_Port, TX_1W_Pin);
 
-		HAL_GPIO_WritePin(TX_1W_GPIO_Port, TX_1W_Pin, 0); // pull the data pin LOW
-		delay(1);  // wait for > 1us
+	for (int i=0;i<8;i++)
+	{
+		Set_Pin_Output(TX_1W_GPIO_Port, TX_1W_Pin);   // set as output
 
-		if (HAL_GPIO_ReadPin(RX_1W_GPIO_Port, RX_1W_Pin))  // if the pin is HIGH
-				{
-			value |= 1 << i;  // read = 1
+		HAL_GPIO_WritePin (TX_1W_GPIO_Port, TX_1W_Pin, 0);  // pull the data pin LOW
+		delay (1);  // wait for > 1us
+
+		Set_Pin_Input(TX_1W_GPIO_Port, TX_1W_Pin);  // set as input
+		if (HAL_GPIO_ReadPin (TX_1W_GPIO_Port, TX_1W_Pin))  // if the pin is HIGH
+		{
+			value |= 1<<i;  // read = 1
 		}
-		delay(50);  // wait for 60 us
+		delay (50);  // wait for 60 us
 	}
 	return value;
 }
@@ -180,6 +218,7 @@ int main(void)
   MX_GPIO_Init();
   MX_USART1_UART_Init();
   MX_TIM16_Init();
+  MX_TIM17_Init();
   /* USER CODE BEGIN 2 */
 	oldTime = HAL_GetTick();
 	HAL_GPIO_WritePin(CTR_GPIO_Port, CTR_Pin, GPIO_PIN_RESET);
@@ -234,38 +273,55 @@ int main(void)
 			default:
 				break;
 			}
-			/*
-			 //e0
-			 Presence = DS18B20_Start();
-			 HAL_Delay(1);
-			 //e1
-			 DS18B20_Write(0xCC);  // skip ROM
-			 DS18B20_Write(0x44);  // convert t
-			 HAL_Delay(800);
-
-			 //e2
-			 Presence = DS18B20_Start();
-			 HAL_Delay(1);
-			 //e3
-			 DS18B20_Write(0xCC);  // skip ROM
-			 DS18B20_Write(0xBE);  // Read Scratch-pad
-
-			 Temp_byte1 = DS18B20_Read();
-			 Temp_byte2 = DS18B20_Read();
-			 TEMP = (Temp_byte2 << 8) | Temp_byte1;
-			 Temperature = (float) TEMP / 16;
-			 */
-
 		}
 
 		// расчитать таймер димера в зависимости от температуры
 
+
 		// управление симистором
-		if (flag_Dimer_Start) {
+		if(Temperature >= setTEMP) // 25
+		{
+			if(Temperature >= (setTEMP + stepTemp)) //28
+			{
+				if(Temperature >= (setTEMP + stepTemp * 2)) //31
+				{
+
+					if(Temperature >= (setTEMP + stepTemp * 3)) // 34
+					{
+						if(Temperature >= (setTEMP + stepTemp * 4)) //37
+						{
+							delay_dimm_us = FAN_100;
+						}
+						else // от 34 до 37
+						{
+							delay_dimm_us = FAN_80;
+						}
+					}
+					else // от 31 до 34
+					{
+						delay_dimm_us = FAN_60;
+					}
+				}
+				else // от 28 до 31
+				{
+					delay_dimm_us = FAN_40;
+				}
+			}
+			else // от 25 до 28
+			{
+				delay_dimm_us = FAN_20;
+			}
+		}
+		else
+		{
+			delay_dimm_us = FAN_0;
+		}
+
+		/*if (flag_Dimer_Start) {
 			switch (event_dimmer) {
 			case 0:
 				if (time_Dimmer >= time_out_dimmer) {
-					HAL_GPIO_WritePin(CTR_GPIO_Port, CTR_Pin, GPIO_PIN_SET);
+					//HAL_GPIO_WritePin(CTR_GPIO_Port, CTR_Pin, GPIO_PIN_SET);
 					event_dimmer = 1;
 					time_Dimmer = 0;
 				}
@@ -273,7 +329,7 @@ int main(void)
 				break;
 			case 1:
 				if (time_Dimmer >= TIME_OUT_DIMMER_PULSE) {
-					HAL_GPIO_WritePin(CTR_GPIO_Port, CTR_Pin, GPIO_PIN_RESET);
+					//HAL_GPIO_WritePin(CTR_GPIO_Port, CTR_Pin, GPIO_PIN_RESET);
 					event_dimmer = 0;
 					time_Dimmer = 0;
 					flag_Dimer_Start = 0;
@@ -283,6 +339,8 @@ int main(void)
 				break;
 			}
 		}
+		*/
+
 
 
 		if ((HAL_GetTick() - oldTime) > 1) {
@@ -292,9 +350,9 @@ int main(void)
 			time_DS18B20_Read += time;
 			time_DS18B20 += time;
 
-			if (flag_Dimer_Start) {
+			/*if (flag_Dimer_Start) {
 				time_Dimmer += time;
-			}
+			}*/
 			time = 0;
 			oldTime = HAL_GetTick();
 		}
@@ -350,10 +408,39 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	if (GPIO_Pin == ZC_INT_Pin) {
-		flag_Dimer_Start = 1;
+		HAL_TIM_Base_Stop_IT(&htim17);
+		__HAL_TIM_SET_AUTORELOAD(&htim17, delay_dimm_us);// таймар на открытие симистора
+		__HAL_TIM_SET_COUNTER(&htim17, 0);
+		//HAL_GPIO_WritePin(CTR_GPIO_Port, CTR_Pin, GPIO_PIN_RESET);
+		flag_pulse_Start = 0;
+		HAL_TIM_Base_Start_IT(&htim17); // запуск таймара на открытие симистора
 	} else {
 		__NOP();
 	}
+}
+
+//HAL_TIM_OC_Start_IT(&htim17);
+void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
+{
+	if(flag_pulse_Start) // если импульс запущен то остановим таймер
+	{
+		flag_pulse_Start = 0;
+		HAL_TIM_Base_Stop_IT(&htim17);
+		HAL_GPIO_WritePin(CTR_GPIO_Port, CTR_Pin, GPIO_PIN_RESET);
+		__HAL_TIM_SET_AUTORELOAD(&htim17, 0);
+		__HAL_TIM_SET_COUNTER(&htim17, 0);
+
+	}
+	else
+	{
+		HAL_TIM_Base_Stop_IT(&htim17);
+		__HAL_TIM_SET_AUTORELOAD(&htim17, DELAY_PULSE_US);// таймар на длинну ипульса
+		__HAL_TIM_SET_COUNTER(&htim17, 0);
+		HAL_TIM_Base_Start_IT(&htim17); // запуск таймара на длинну ипульса
+		HAL_GPIO_WritePin(CTR_GPIO_Port, CTR_Pin, GPIO_PIN_SET);
+		flag_pulse_Start = 1;
+	}
+
 }
 /* USER CODE END 4 */
 

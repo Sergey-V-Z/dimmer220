@@ -66,8 +66,8 @@ all: main-build
 main-build: dimmer.elf secondary-outputs
 
 # Tool invocations
-dimmer.elf dimmer.map: $(OBJS) $(USER_OBJS) D:\Sergey\dimmer220\soft\dimmer\STM32F030F4PX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
-	arm-none-eabi-gcc -o "dimmer.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0 -T"D:\Sergey\dimmer220\soft\dimmer\STM32F030F4PX_FLASH.ld" --specs=nosys.specs -Wl,-Map="dimmer.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+dimmer.elf dimmer.map: $(OBJS) $(USER_OBJS) D:\Radio\Jobe\dimmer220\soft\dimmer\STM32F030F4PX_FLASH.ld makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-gcc -o "dimmer.elf" @"objects.list" $(USER_OBJS) $(LIBS) -mcpu=cortex-m0 -T"D:\Radio\Jobe\dimmer220\soft\dimmer\STM32F030F4PX_FLASH.ld" --specs=nosys.specs -Wl,-Map="dimmer.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
 	@echo 'Finished building target: $@'
 	@echo ' '
 

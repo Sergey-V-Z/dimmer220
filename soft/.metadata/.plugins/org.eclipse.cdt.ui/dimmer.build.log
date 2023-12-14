@@ -1,10 +1,23 @@
-00:13:18 **** Incremental Build of configuration Debug for project dimmer ****
+17:17:29 **** Incremental Build of configuration Debug for project dimmer ****
 make -j8 all 
-arm-none-eabi-size   dimmer.elf 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m0 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F030x6 -c -I../Core/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F0xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "dimmer.elf" @"objects.list"   -mcpu=cortex-m0 -T"D:\Radio\Jobe\dimmer220\soft\dimmer\STM32F030F4PX_FLASH.ld" --specs=nosys.specs -Wl,-Map="dimmer.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: dimmer.elf
+ 
+arm-none-eabi-size  dimmer.elf 
+arm-none-eabi-objdump -h -S dimmer.elf  > "dimmer.list"
    text	   data	    bss	    dec	    hex	filename
-  10184	     20	   1780	  11984	   2ed0	dimmer.elf
+  14000	     36	   1884	  15920	   3e30	dimmer.elf
+arm-none-eabi-objcopy  -O ihex dimmer.elf  "dimmer.hex"
 Finished building: default.size.stdout
+arm-none-eabi-objcopy  -O binary dimmer.elf  "dimmer.bin"
+ 
+Finished building: dimmer.hex
+Finished building: dimmer.bin
+ 
+Finished building: dimmer.list
+ 
  
 
-00:13:18 Build Finished. 0 errors, 0 warnings. (took 469ms)
+17:17:30 Build Finished. 0 errors, 0 warnings. (took 1s.76ms)
 

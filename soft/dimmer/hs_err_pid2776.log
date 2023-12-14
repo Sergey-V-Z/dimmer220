@@ -1,0 +1,227 @@
+#
+# There is insufficient memory for the Java Runtime Environment to continue.
+# Native memory allocation (mmap) failed to map 268435456 bytes for G1 virtual space
+# Possible reasons:
+#   The system is out of physical RAM or swap space
+#   The process is running with CompressedOops enabled, and the Java Heap may be blocking the growth of the native heap
+# Possible solutions:
+#   Reduce memory load on the system
+#   Increase physical memory or swap space
+#   Check if swap backing store is full
+#   Decrease Java heap size (-Xmx/-Xms)
+#   Decrease number of Java threads
+#   Decrease Java thread stack sizes (-Xss)
+#   Set larger code cache with -XX:ReservedCodeCacheSize=
+#   JVM is running with Unscaled Compressed Oops mode in which the Java heap is
+#     placed in the first 4GB address space. The Java Heap base address is the
+#     maximum limit for the native heap growth. Please use -XX:HeapBaseMinAddress
+#     to set the Java Heap base and to place the Java Heap above 4GB virtual address.
+# This output file may be truncated or incomplete.
+#
+#  Out of Memory Error (os_windows.cpp:3617), pid=2776, tid=7716
+#
+# JRE version:  (17.0.8.1+1) (build )
+# Java VM: OpenJDK 64-Bit Server VM (17.0.8.1+1, mixed mode, sharing, tiered, compressed oops, compressed class ptrs, g1 gc, windows-amd64)
+# No core dump will be written. Minidumps are not enabled by default on client versions of Windows
+#
+
+---------------  S U M M A R Y ------------
+
+Command Line: -Dosgi.requiredJavaVersion=1.8 -Dosgi.instance.area.default=@user.home/STM32CubeIDE/workspace_1.13.2 -Declipse.buildId=Version 1.13.2 -DproductMaturityGrade=mm -XX:+UseG1GC -XX:+UseStringDeduplication -Xms256m -Xmx1024m -Djavax.net.ssl.trustStoreType=WINDOWS-ROOT 
+
+Host: Intel(R) Core(TM) i5-8300H CPU @ 2.30GHz, 8 cores, 19G,  Windows 10 , 64 bit Build 19041 (10.0.19041.3570)
+Time: Wed Dec 13 16:16:24 2023  Windows 10 , 64 bit Build 19041 (10.0.19041.3570) elapsed time: 0.011824 seconds (0d 0h 0m 0s)
+
+---------------  T H R E A D  ---------------
+
+Current thread (0x000001daf2556130):  JavaThread "Unknown thread" [_thread_in_vm, id=7716, stack(0x00000093de800000,0x00000093de900000)]
+
+Stack: [0x00000093de800000,0x00000093de900000]
+Native frames: (J=compiled Java code, j=interpreted, Vv=VM code, C=native code)
+V  [jvm.dll+0x678b0a]
+V  [jvm.dll+0x835e84]
+V  [jvm.dll+0x83762e]
+V  [jvm.dll+0x837c93]
+V  [jvm.dll+0x24746f]
+V  [jvm.dll+0x675859]
+V  [jvm.dll+0x66a0ea]
+V  [jvm.dll+0x306c7b]
+V  [jvm.dll+0x30e166]
+V  [jvm.dll+0x35dd3e]
+V  [jvm.dll+0x35df6f]
+V  [jvm.dll+0x2ddb48]
+V  [jvm.dll+0x2deab4]
+V  [jvm.dll+0x807f31]
+V  [jvm.dll+0x36bb21]
+V  [jvm.dll+0x7e733c]
+V  [jvm.dll+0x3ee4af]
+V  [jvm.dll+0x3f00c1]
+C  [eclipse_11801.dll+0x72e2]
+C  [eclipse_11801.dll+0x3f69]
+C  [stm32cubeide.exe+0x1f27]
+C  [stm32cubeide.exe+0x3b74]
+C  [KERNEL32.DLL+0x17344]
+C  [ntdll.dll+0x526b1]
+
+
+---------------  P R O C E S S  ---------------
+
+Threads class SMR info:
+_java_thread_list=0x00007ff829c3a018, length=0, elements={
+}
+
+Java Threads: ( => current thread )
+
+Other Threads:
+  0x000001daf2596200 GCTaskThread "GC Thread#0" [stack: 0x00000093dec00000,0x00000093ded00000] [id=18900]
+  0x000001daf259f060 ConcurrentGCThread "G1 Main Marker" [stack: 0x00000093ded00000,0x00000093dee00000] [id=12236]
+  0x000001daf25a04f0 ConcurrentGCThread "G1 Conc#0" [stack: 0x00000093dee00000,0x00000093def00000] [id=13732]
+
+[error occurred during error reporting (printing all threads), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ff82940e587]
+
+VM state: not at safepoint (not fully initialized)
+
+VM Mutex/Monitor currently owned by a thread:  ([mutex/lock_event])
+[0x000001daf25534e0] Heap_lock - owner thread: 0x000001daf2556130
+
+Heap address: 0x00000000c0000000, size: 1024 MB, Compressed Oops mode: 32-bit
+
+CDS archive(s) mapped at: [0x0000000000000000-0x0000000000000000-0x0000000000000000), size 0, SharedBaseAddress: 0x0000000800000000, ArchiveRelocationMode: 1.
+Narrow klass base: 0x0000000000000000, Narrow klass shift: 0, Narrow klass range: 0x0
+
+GC Precious Log:
+<Empty>
+
+Heap:
+ garbage-first heap   total 0K, used 0K [0x00000000c0000000, 0x0000000100000000)
+  region size 1024K, 0 young (0K), 0 survivors (0K)
+
+[error occurred during error reporting (printing heap information), id 0xc0000005, EXCEPTION_ACCESS_VIOLATION (0xc0000005) at pc=0x00007ff8297f2699]
+
+GC Heap History (0 events):
+No events
+
+Dll operation events (1 events):
+Event: 0.007 Loaded shared library C:\ST\STM32CubeIDE_1.5.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.jre.win64_3.1.0.202310310920\jre\bin\java.dll
+
+Deoptimization events (0 events):
+No events
+
+Classes unloaded (0 events):
+No events
+
+Classes redefined (0 events):
+No events
+
+Internal exceptions (0 events):
+No events
+
+VM Operations (0 events):
+No events
+
+Events (0 events):
+No events
+
+
+Dynamic libraries:
+0x00007ff7e21c0000 - 0x00007ff7e2244000 	C:\ST\STM32CubeIDE_1.5.1\STM32CubeIDE\stm32cubeide.exe
+0x00007ff892770000 - 0x00007ff892967000 	C:\Windows\SYSTEM32\ntdll.dll
+0x00007ff8917b0000 - 0x00007ff89186d000 	C:\Windows\System32\KERNEL32.DLL
+0x00007ff88ff00000 - 0x00007ff8901f6000 	C:\Windows\System32\KERNELBASE.dll
+0x00007ff891960000 - 0x00007ff891afe000 	C:\Windows\System32\USER32.dll
+0x00007ff8902a0000 - 0x00007ff8902c2000 	C:\Windows\System32\win32u.dll
+0x00007ff891780000 - 0x00007ff8917ac000 	C:\Windows\System32\GDI32.dll
+0x00007ff890300000 - 0x00007ff89041a000 	C:\Windows\System32\gdi32full.dll
+0x00007ff890200000 - 0x00007ff89029d000 	C:\Windows\System32\msvcp_win.dll
+0x00007ff890640000 - 0x00007ff890740000 	C:\Windows\System32\ucrtbase.dll
+0x00007ff87a4b0000 - 0x00007ff87a74a000 	C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.19041.3570_none_60bb2a3971f3e41a\COMCTL32.dll
+0x00007ff890e60000 - 0x00007ff890efe000 	C:\Windows\System32\msvcrt.dll
+0x00007ff890840000 - 0x00007ff890870000 	C:\Windows\System32\IMM32.DLL
+0x00007ff8793d0000 - 0x00007ff87940e000 	C:\ST\STM32CubeIDE_1.5.1\STM32CubeIDE\plugins\org.eclipse.equinox.launcher.win32.win32.x86_64_1.2.700.v20221108-1024\eclipse_11801.dll
+0x00007ff891c40000 - 0x00007ff891cee000 	C:\Windows\System32\ADVAPI32.dll
+0x00007ff891cf0000 - 0x00007ff891d8c000 	C:\Windows\System32\sechost.dll
+0x00007ff8915f0000 - 0x00007ff891716000 	C:\Windows\System32\RPCRT4.dll
+0x00007ff891160000 - 0x00007ff89128b000 	C:\Windows\System32\ole32.dll
+0x00007ff891290000 - 0x00007ff8915e4000 	C:\Windows\System32\combase.dll
+0x00007ff886060000 - 0x00007ff88606a000 	C:\Windows\SYSTEM32\VERSION.dll
+0x00007ff829120000 - 0x00007ff829d6c000 	C:\ST\STM32CubeIDE_1.5.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.jre.win64_3.1.0.202310310920\jre\bin\server\jvm.dll
+0x00007ff88f370000 - 0x00007ff88f3bb000 	C:\Windows\SYSTEM32\POWRPROF.dll
+0x00007ff878df0000 - 0x00007ff878e0b000 	C:\Windows\SYSTEM32\VCRUNTIME140.dll
+0x00007ff877dd0000 - 0x00007ff877df7000 	C:\Windows\SYSTEM32\WINMM.dll
+0x00007ff889cc0000 - 0x00007ff889cc9000 	C:\Windows\SYSTEM32\WSOCK32.dll
+0x00007ff8918f0000 - 0x00007ff89195b000 	C:\Windows\System32\WS2_32.dll
+0x00007ff878de0000 - 0x00007ff878dec000 	C:\Windows\SYSTEM32\VCRUNTIME140_1.dll
+0x00007ff88f230000 - 0x00007ff88f242000 	C:\Windows\SYSTEM32\UMPDC.dll
+0x00007ff8899c0000 - 0x00007ff8899ca000 	C:\ST\STM32CubeIDE_1.5.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.jre.win64_3.1.0.202310310920\jre\bin\jimage.dll
+0x00007ff88dc80000 - 0x00007ff88de64000 	C:\Windows\SYSTEM32\DBGHELP.DLL
+0x00007ff874dc0000 - 0x00007ff874df4000 	C:\Windows\SYSTEM32\dbgcore.DLL
+0x00007ff890740000 - 0x00007ff8907c2000 	C:\Windows\System32\bcryptPrimitives.dll
+0x00007ff8805f0000 - 0x00007ff880615000 	C:\ST\STM32CubeIDE_1.5.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.jre.win64_3.1.0.202310310920\jre\bin\java.dll
+0x00007ff88e640000 - 0x00007ff88e652000 	C:\Windows\SYSTEM32\kernel.appcore.dll
+
+dbghelp: loaded successfully - version: 4.0.5 - missing functions: none
+symbol engine: initialized successfully - sym options: 0x614 - pdb path: .;C:\ST\STM32CubeIDE_1.5.1\STM32CubeIDE;C:\Windows\SYSTEM32;C:\Windows\WinSxS\amd64_microsoft.windows.common-controls_6595b64144ccf1df_6.0.19041.3570_none_60bb2a3971f3e41a;C:\ST\STM32CubeIDE_1.5.1\STM32CubeIDE\plugins\org.eclipse.equinox.launcher.win32.win32.x86_64_1.2.700.v20221108-1024;C:\ST\STM32CubeIDE_1.5.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.jre.win64_3.1.0.202310310920\jre\bin\server;C:\ST\STM32CubeIDE_1.5.1\STM32CubeIDE\plugins\com.st.stm32cube.ide.jre.win64_3.1.0.202310310920\jre\bin
+
+VM Arguments:
+jvm_args: -Dosgi.requiredJavaVersion=1.8 -Dosgi.instance.area.default=@user.home/STM32CubeIDE/workspace_1.13.2 -Declipse.buildId=Version 1.13.2 -DproductMaturityGrade=mm -XX:+UseG1GC -XX:+UseStringDeduplication -Xms256m -Xmx1024m -Djavax.net.ssl.trustStoreType=WINDOWS-ROOT 
+java_command: <unknown>
+java_class_path (initial): C:\ST\STM32CubeIDE_1.5.1\STM32CubeIDE\\plugins/org.eclipse.equinox.launcher_1.6.400.v20210924-0641.jar
+Launcher Type: generic
+
+[Global flags]
+     intx CICompilerCount                          = 4                                         {product} {ergonomic}
+     uint ConcGCThreads                            = 2                                         {product} {ergonomic}
+     uint G1ConcRefinementThreads                  = 8                                         {product} {ergonomic}
+   size_t G1HeapRegionSize                         = 1048576                                   {product} {ergonomic}
+    uintx GCDrainStackTargetSize                   = 64                                        {product} {ergonomic}
+   size_t InitialHeapSize                          = 268435456                                 {product} {command line}
+   size_t MarkStackSize                            = 4194304                                   {product} {ergonomic}
+   size_t MaxHeapSize                              = 1073741824                                {product} {command line}
+   size_t MinHeapDeltaBytes                        = 1048576                                   {product} {ergonomic}
+   size_t MinHeapSize                              = 268435456                                 {product} {command line}
+    uintx NonNMethodCodeHeapSize                   = 5839372                                {pd product} {ergonomic}
+    uintx NonProfiledCodeHeapSize                  = 122909434                              {pd product} {ergonomic}
+    uintx ProfiledCodeHeapSize                     = 122909434                              {pd product} {ergonomic}
+    uintx ReservedCodeCacheSize                    = 251658240                              {pd product} {ergonomic}
+     bool SegmentedCodeCache                       = true                                      {product} {ergonomic}
+   size_t SoftMaxHeapSize                          = 1073741824                             {manageable} {ergonomic}
+     bool UseCompressedClassPointers               = true                           {product lp64_product} {ergonomic}
+     bool UseCompressedOops                        = true                           {product lp64_product} {ergonomic}
+     bool UseG1GC                                  = true                                      {product} {command line}
+     bool UseLargePagesIndividualAllocation        = false                                  {pd product} {ergonomic}
+     bool UseStringDeduplication                   = true                                      {product} {command line}
+
+Logging:
+Log output configuration:
+ #0: stdout all=warning uptime,level,tags
+ #1: stderr all=off uptime,level,tags
+
+Environment Variables:
+PATH=C:/ST/STM32CubeIDE_1.5.1/STM32CubeIDE//plugins/com.st.stm32cube.ide.jre.win64_3.0.0.202305091045/jre/bin/server;C:/ST/STM32CubeIDE_1.5.1/STM32CubeIDE//plugins/com.st.stm32cube.ide.jre.win64_3.0.0.202305091045/jre/bin;C:\Program Files (x86)\VMware\VMware Workstation\bin\;C:\ProgramData\Oracle\Java\javapath;C:\Program Files (x86)\Common Files\Oracle\Java\javapath;C:\Windows\system32;C:\Windows;C:\Windows\System32\Wbem;C:\Windows\System32\WindowsPowerShell\v1.0\;C:\Windows\System32\OpenSSH\;C:\Program Files\TortoiseGit\bin;C:\Program Files (x86)\AOMEI Backupper;C:\Program Files\Git\cmd;C:\Program Files (x86)\PuTTY\;C:\Program Files (x86)\STMicroelectronics\STM32 ST-LINK Utility\ST-LINK Utility;C:\Program Files (x86)\NVIDIA Corporation\PhysX\Common;C:\Program Files\NVIDIA Corporation\NVIDIA NvDLISR;C:\Users\Ierixon-HP\AppData\Local\Programs\Python\Python36\Scripts\;C:\Users\Ierixon-HP\AppData\Local\Programs\Python\Python36\;C:\Users\Ierixon-HP\AppData\Local\Programs\Python\Python39-32\Scripts\;C:\Users\Ierixon-HP\AppData\Local\Programs\Python\Python39-32\;C:\Users\Ierixon-HP\AppData\Local\Microsoft\WindowsApps;C:\Users\Ierixon-HP\AppData\Local\Programs\Microsoft VS Code\bin;C:\Program Files\JetBrains\PyCharm Community Edition 2020.3.2\bin;D:\Radio\prestogio\Prestigio Geovision 5850 HDDVR\PhoenixSuit\;C:\Users\Ierixon-HP\AppData\Local\gitkraken\bin;"C:\Program Files\Git\bin\git.exe; C:\Program Files\Git\bin\cmd";;D:\Radio\Jobe\dimmer220\soft\dimmer;
+USERNAME=Ierixon-HP
+OS=Windows_NT
+PROCESSOR_IDENTIFIER=Intel64 Family 6 Model 158 Stepping 10, GenuineIntel
+TMP=C:\Users\IERIXO~1\AppData\Local\Temp
+TEMP=C:\Users\IERIXO~1\AppData\Local\Temp
+
+
+
+---------------  S Y S T E M  ---------------
+
+OS:
+ Windows 10 , 64 bit Build 19041 (10.0.19041.3570)
+OS uptime: 21 days 7:31 hours
+Hyper-V role detected
+
+CPU: total 8 (initial active 8) (4 cores per cpu, 2 threads per core) family 6 model 158 stepping 10 microcode 0xb4, cx8, cmov, fxsr, ht, mmx, 3dnowpref, sse, sse2, sse3, ssse3, sse4.1, sse4.2, popcnt, lzcnt, tsc, tscinvbit, avx, avx2, aes, erms, clmul, bmi1, bmi2, adx, fma, vzeroupper, clflush, clflushopt, hv
+Processor Information for all 8 processors :
+  Max Mhz: 2304, Current Mhz: 2304, Mhz Limit: 2304
+
+Memory: 4k page, system-wide physical 20369M (9115M free)
+TotalPageFile size 22369M (AvailPageFile size 51M)
+current process WorkingSet (physical memory assigned to process): 11M, peak: 11M
+current process commit charge ("private bytes"): 60M, peak: 316M
+
+vm_info: OpenJDK 64-Bit Server VM (17.0.8.1+1) for windows-amd64 JRE (17.0.8.1+1), built on Aug 23 2023 15:29:17 by "admin" with MS VC++ 16.7 (VS2019)
+
+END.

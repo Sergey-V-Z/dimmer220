@@ -1,7 +1,7 @@
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86_64
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/name=Local
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=win32
-configDescList=org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:dimmer Debug
+configDescList=org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:freqGen Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:dimmer Debug
 eclipse.preferences.version=1
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Control_LED\ Debug/activeLaunchMode=debug
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Control_LED\ Debug/activeLaunchTarget=null\:---
@@ -19,5 +19,6 @@ org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:UniversalDriver_v3.1_BLDC/activ
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:UniversalDriver_v3.1_step\ Debug/activeLaunchMode=debug
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:chanels_led_drv\ Debug\ (4)/activeLaunchMode=run
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:chanels_pwr/activeLaunchMode=run
-org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:dimmer\ Debug/activeLaunchMode=debug
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:dimmer\ Debug/activeLaunchMode=run
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:dimmer\ Debug/activeLaunchTarget=null\:---
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:freqGen\ Debug/activeLaunchMode=run
