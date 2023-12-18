@@ -238,6 +238,7 @@ int main(void)
 			case 0:
 				Presence = DS18B20_Start();
 				time_out_DS18B20 = 1; // установки таймера задержки
+				time_DS18B20 = 0;
 				event_DS18B20 = 1;
 				break;
 			case 1:
@@ -245,6 +246,7 @@ int main(void)
 					DS18B20_Write(0xCC);  // skip ROM
 					DS18B20_Write(0x44);  // convert t
 					time_out_DS18B20 = 800; // установки таймера задержки
+					time_DS18B20 = 0;
 					event_DS18B20 = 2;
 				}
 				break;
@@ -252,6 +254,7 @@ int main(void)
 				if (time_DS18B20 >= time_out_DS18B20) {
 					Presence = DS18B20_Start();
 					time_out_DS18B20 = 1; // установки таймера задержки
+					time_DS18B20 = 0;
 					event_DS18B20 = 3;
 				}
 				break;
@@ -266,6 +269,7 @@ int main(void)
 					Temperature = (float) TEMP / 16;
 
 					time_out_DS18B20 = 0;	// сброс таймера задержки
+					time_DS18B20 = 0;
 					time_DS18B20_Read = 0; // сброс таймера опроса
 					event_DS18B20 = 0;
 				}

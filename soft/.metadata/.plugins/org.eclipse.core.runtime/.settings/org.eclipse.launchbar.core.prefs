@@ -19,6 +19,6 @@ org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:UniversalDriver_v3.1_BLDC/activ
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:UniversalDriver_v3.1_step\ Debug/activeLaunchMode=debug
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:chanels_led_drv\ Debug\ (4)/activeLaunchMode=run
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:chanels_pwr/activeLaunchMode=run
-org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:dimmer\ Debug/activeLaunchMode=run
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:dimmer\ Debug/activeLaunchMode=debug
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:dimmer\ Debug/activeLaunchTarget=null\:---
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:freqGen\ Debug/activeLaunchMode=run

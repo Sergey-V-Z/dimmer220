@@ -1262,3 +1262,65 @@ Finished building: dimmer.bin
 Finished building: dimmer.list
  
  
+13:40:15 **** Incremental Build of configuration Debug for project dimmer ****
+make -j8 all 
+arm-none-eabi-size  dimmer.elf 
+   text	   data	    bss	    dec	    hex	filename
+  14000	     36	   1884	  15920	   3e30	dimmer.elf
+Finished building: default.size.stdout
+ 
+13:40:35 **** Incremental Build of configuration Debug for project dimmer ****
+make -j8 all 
+arm-none-eabi-size  dimmer.elf 
+   text	   data	    bss	    dec	    hex	filename
+  14000	     36	   1884	  15920	   3e30	dimmer.elf
+Finished building: default.size.stdout
+ 
+13:55:28 **** Incremental Build of configuration Debug for project dimmer ****
+make -j8 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m0 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F030x6 -c -I../Core/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc -I../Drivers/STM32F0xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F0xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc -o "dimmer.elf" @"objects.list"   -mcpu=cortex-m0 -T"D:\Radio\Jobe\dimmer220\soft\dimmer\STM32F030F4PX_FLASH.ld" --specs=nosys.specs -Wl,-Map="dimmer.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: dimmer.elf
+ 
+arm-none-eabi-size  dimmer.elf 
+arm-none-eabi-objdump -h -S dimmer.elf  > "dimmer.list"
+arm-none-eabi-objcopy  -O ihex dimmer.elf  "dimmer.hex"
+   text	   data	    bss	    dec	    hex	filename
+  14024	     36	   1884	  15944	   3e48	dimmer.elf
+arm-none-eabi-objcopy  -O binary dimmer.elf  "dimmer.bin"
+Finished building: default.size.stdout
+ 
+Finished building: dimmer.hex
+Finished building: dimmer.bin
+ 
+ 
+Finished building: dimmer.list
+ 
+13:55:29 **** Incremental Build of configuration Debug for project freqGen ****
+make -j8 all 
+arm-none-eabi-size  freqGen.elf 
+   text	   data	    bss	    dec	    hex	filename
+   6288	     20	   1644	   7952	   1f10	freqGen.elf
+Finished building: default.size.stdout
+ 
+13:55:36 **** Incremental Build of configuration Debug for project dimmer ****
+make -j8 all 
+arm-none-eabi-size  dimmer.elf 
+   text	   data	    bss	    dec	    hex	filename
+  14024	     36	   1884	  15944	   3e48	dimmer.elf
+Finished building: default.size.stdout
+ 
+13:55:37 **** Incremental Build of configuration Debug for project freqGen ****
+make -j8 all 
+arm-none-eabi-size  freqGen.elf 
+   text	   data	    bss	    dec	    hex	filename
+   6288	     20	   1644	   7952	   1f10	freqGen.elf
+Finished building: default.size.stdout
+ 
+13:55:43 **** Incremental Build of configuration Debug for project dimmer ****
+make -j8 all 
+arm-none-eabi-size  dimmer.elf 
+   text	   data	    bss	    dec	    hex	filename
+  14024	     36	   1884	  15944	   3e48	dimmer.elf
+Finished building: default.size.stdout
+ 
