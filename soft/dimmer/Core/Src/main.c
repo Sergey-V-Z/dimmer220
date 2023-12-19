@@ -36,7 +36,7 @@
 #define PERIOD_US 10000		// 10 ms
 #define DELAY_PULSE_US 1000 // 1 ms
 #define FAN_0 10000;		// 0 %
-#define FAN_20 8000;		// 20 %
+#define FAN_20 5000;		// 30 %
 #define FAN_40 6000;		// 40 %
 #define FAN_60 4000;		// 60 %
 #define FAN_80 2000;		// 80 %
@@ -177,6 +177,7 @@ uint8_t DS18B20_Read (void)
 		delay (1);  // wait for > 1us
 
 		Set_Pin_Input(TX_1W_GPIO_Port, TX_1W_Pin);  // set as input
+		delay (15);
 		if (HAL_GPIO_ReadPin (TX_1W_GPIO_Port, TX_1W_Pin))  // if the pin is HIGH
 		{
 			value |= 1<<i;  // read = 1
@@ -412,6 +413,7 @@ void SystemClock_Config(void)
 /* USER CODE BEGIN 4 */
 void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 	if (GPIO_Pin == ZC_INT_Pin) {
+		HAL_GPIO_TogglePin(B2_GPIO_Port, B2_Pin);
 		HAL_TIM_Base_Stop_IT(&htim17);
 		__HAL_TIM_SET_AUTORELOAD(&htim17, delay_dimm_us);// таймар на открытие симистора
 		__HAL_TIM_SET_COUNTER(&htim17, 0);
@@ -426,6 +428,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 //HAL_TIM_OC_Start_IT(&htim17);
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
+	HAL_GPIO_TogglePin(B1_GPIO_Port, B1_Pin);
+
 	if(flag_pulse_Start) // если импульс запущен то остановим таймер
 	{
 		flag_pulse_Start = 0;
