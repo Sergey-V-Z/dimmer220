@@ -34,13 +34,13 @@
 #define TIME_OUT_DIMMER_PULSE 1
 
 #define PERIOD_US 10000		// 10 ms
-#define DELAY_PULSE_US 1000 // 1 ms
+#define DELAY_PULSE_US 5000 // 5 ms
 #define FAN_0 10000;		// 0 %
-#define FAN_20 5000;		// 30 %
-#define FAN_40 6000;		// 40 %
-#define FAN_60 4000;		// 60 %
-#define FAN_80 2000;		// 80 %
-#define FAN_100 5;		// 100 %
+#define FAN_P1 5000;		// 50 %
+#define FAN_P2 4000;		// 60 %
+#define FAN_P3 3000;		// 70 %
+#define FAN_P4 2000;		// 80 %
+#define FAN_P5 5;		// 100 %
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -295,26 +295,26 @@ int main(void)
 					{
 						if(Temperature >= (setTEMP + stepTemp * 4)) //37
 						{
-							delay_dimm_us = FAN_100;
+							delay_dimm_us = FAN_P5;
 						}
 						else // от 34 до 37
 						{
-							delay_dimm_us = FAN_80;
+							delay_dimm_us = FAN_P4;
 						}
 					}
 					else // от 31 до 34
 					{
-						delay_dimm_us = FAN_60;
+						delay_dimm_us = FAN_P3;
 					}
 				}
 				else // от 28 до 31
 				{
-					delay_dimm_us = FAN_40;
+					delay_dimm_us = FAN_P2;
 				}
 			}
 			else // от 25 до 28
 			{
-				delay_dimm_us = FAN_20;
+				delay_dimm_us = FAN_P1;
 			}
 		}
 		else
@@ -428,13 +428,14 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 //HAL_TIM_OC_Start_IT(&htim17);
 void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
-	HAL_GPIO_TogglePin(B1_GPIO_Port, B1_Pin);
+	//HAL_GPIO_TogglePin(B1_GPIO_Port, B1_Pin);
 
 	if(flag_pulse_Start) // если импульс запущен то остановим таймер
 	{
 		flag_pulse_Start = 0;
 		HAL_TIM_Base_Stop_IT(&htim17);
 		HAL_GPIO_WritePin(CTR_GPIO_Port, CTR_Pin, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(B1_GPIO_Port, B1_Pin, GPIO_PIN_RESET);
 		__HAL_TIM_SET_AUTORELOAD(&htim17, 0);
 		__HAL_TIM_SET_COUNTER(&htim17, 0);
 
@@ -446,6 +447,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		__HAL_TIM_SET_COUNTER(&htim17, 0);
 		HAL_TIM_Base_Start_IT(&htim17); // запуск таймара на длинну ипульса
 		HAL_GPIO_WritePin(CTR_GPIO_Port, CTR_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(B1_GPIO_Port, B1_Pin, GPIO_PIN_SET);
 		flag_pulse_Start = 1;
 	}
 
