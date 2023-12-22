@@ -28,6 +28,16 @@ Core/Src/stm32f0xx_it.o: ../Core/Src/stm32f0xx_it.c ../Core/Inc/main.h \
  ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim_ex.h \
  ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart.h \
  ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart_ex.h \
+ ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_ll_crs.h \
+ ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_ll_rcc.h \
+ ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_ll_bus.h \
+ ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_ll_system.h \
+ ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_ll_exti.h \
+ ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_ll_cortex.h \
+ ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_ll_utils.h \
+ ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_ll_pwr.h \
+ ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_ll_dma.h \
+ ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_ll_gpio.h \
  ../Core/Inc/stm32f0xx_it.h
 ../Core/Inc/main.h:
 ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal.h:
@@ -59,4 +69,14 @@ Core/Src/stm32f0xx_it.o: ../Core/Src/stm32f0xx_it.c ../Core/Inc/main.h \
 ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_tim_ex.h:
 ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart.h:
 ../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_hal_uart_ex.h:
+../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_ll_crs.h:
+../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_ll_rcc.h:
+../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_ll_bus.h:
+../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_ll_system.h:
+../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_ll_exti.h:
+../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_ll_cortex.h:
+../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_ll_utils.h:
+../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_ll_pwr.h:
+../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_ll_dma.h:
+../Drivers/STM32F0xx_HAL_Driver/Inc/stm32f0xx_ll_gpio.h:
 ../Core/Inc/stm32f0xx_it.h:

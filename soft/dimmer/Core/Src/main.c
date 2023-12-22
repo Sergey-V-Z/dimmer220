@@ -186,6 +186,12 @@ uint8_t DS18B20_Read (void)
 	}
 	return value;
 }
+
+float map(float x, float in_min, float in_max, float out_min, float out_max)
+{
+  return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
+}
+
 /* USER CODE END 0 */
 
 /**
@@ -272,8 +278,16 @@ int main(void)
 					time_out_DS18B20 = 0;	// сброс таймера задержки
 					time_DS18B20 = 0;
 					time_DS18B20_Read = 0; // сброс таймера опроса
-					event_DS18B20 = 0;
+					event_DS18B20 = 4;
 				}
+				break;
+			case 4:
+				// если температура долго не меняется включить на максимум
+
+				// управление симистором
+				delay_dimm_us = (uint32_t)map(Temperature, setTEMP, setTEMP + 10, 0, 11000);
+
+				event_DS18B20 = 0;
 				break;
 			default:
 				break;
@@ -282,7 +296,7 @@ int main(void)
 
 		// расчитать таймер димера в зависимости от температуры
 
-
+/*
 		// управление симистором
 		if(Temperature >= setTEMP) // 25
 		{
@@ -321,6 +335,7 @@ int main(void)
 		{
 			delay_dimm_us = FAN_0;
 		}
+		*/
 
 		/*if (flag_Dimer_Start) {
 			switch (event_dimmer) {
@@ -371,43 +386,43 @@ int main(void)
   */
 void SystemClock_Config(void)
 {
-  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
-  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
-  RCC_PeriphCLKInitTypeDef PeriphClkInit = {0};
+  LL_FLASH_SetLatency(LL_FLASH_LATENCY_1);
+  while(LL_FLASH_GetLatency() != LL_FLASH_LATENCY_1)
+  {
+  }
+  LL_RCC_HSI_Enable();
 
-  /** Initializes the RCC Oscillators according to the specified parameters
-  * in the RCC_OscInitTypeDef structure.
-  */
-  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
-  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
-  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
-  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_ON;
-  RCC_OscInitStruct.PLL.PLLSource = RCC_PLLSOURCE_HSI;
-  RCC_OscInitStruct.PLL.PLLMUL = RCC_PLL_MUL12;
-  RCC_OscInitStruct.PLL.PREDIV = RCC_PREDIV_DIV1;
-  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+   /* Wait till HSI is ready */
+  while(LL_RCC_HSI_IsReady() != 1)
+  {
+
+  }
+  LL_RCC_HSI_SetCalibTrimming(16);
+  LL_RCC_PLL_ConfigDomain_SYS(LL_RCC_PLLSOURCE_HSI_DIV_2, LL_RCC_PLL_MUL_12);
+  LL_RCC_PLL_Enable();
+
+   /* Wait till PLL is ready */
+  while(LL_RCC_PLL_IsReady() != 1)
+  {
+
+  }
+  LL_RCC_SetAHBPrescaler(LL_RCC_SYSCLK_DIV_1);
+  LL_RCC_SetAPB1Prescaler(LL_RCC_APB1_DIV_1);
+  LL_RCC_SetSysClkSource(LL_RCC_SYS_CLKSOURCE_PLL);
+
+   /* Wait till System clock is ready */
+  while(LL_RCC_GetSysClkSource() != LL_RCC_SYS_CLKSOURCE_STATUS_PLL)
+  {
+
+  }
+  LL_SetSystemCoreClock(48000000);
+
+   /* Update the time base */
+  if (HAL_InitTick (TICK_INT_PRIORITY) != HAL_OK)
   {
     Error_Handler();
   }
-
-  /** Initializes the CPU, AHB and APB buses clocks
-  */
-  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
-                              |RCC_CLOCKTYPE_PCLK1;
-  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_PLLCLK;
-  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
-  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
-
-  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_1) != HAL_OK)
-  {
-    Error_Handler();
-  }
-  PeriphClkInit.PeriphClockSelection = RCC_PERIPHCLK_USART1;
-  PeriphClkInit.Usart1ClockSelection = RCC_USART1CLKSOURCE_PCLK1;
-  if (HAL_RCCEx_PeriphCLKConfig(&PeriphClkInit) != HAL_OK)
-  {
-    Error_Handler();
-  }
+  LL_RCC_SetUSARTClockSource(LL_RCC_USART1_CLKSOURCE_PCLK1);
 }
 
 /* USER CODE BEGIN 4 */
@@ -417,7 +432,8 @@ void HAL_GPIO_EXTI_Callback(uint16_t GPIO_Pin) {
 		HAL_TIM_Base_Stop_IT(&htim17);
 		__HAL_TIM_SET_AUTORELOAD(&htim17, delay_dimm_us);// таймар на открытие симистора
 		__HAL_TIM_SET_COUNTER(&htim17, 0);
-		//HAL_GPIO_WritePin(CTR_GPIO_Port, CTR_Pin, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(CTR_GPIO_Port, CTR_Pin, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(B1_GPIO_Port, B1_Pin, GPIO_PIN_RESET);
 		flag_pulse_Start = 0;
 		HAL_TIM_Base_Start_IT(&htim17); // запуск таймара на открытие симистора
 	} else {
@@ -430,7 +446,7 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 {
 	//HAL_GPIO_TogglePin(B1_GPIO_Port, B1_Pin);
 
-	if(flag_pulse_Start) // если импульс запущен то остановим таймер
+	/*if(flag_pulse_Start) // если импульс запущен то остановим таймер
 	{
 		flag_pulse_Start = 0;
 		HAL_TIM_Base_Stop_IT(&htim17);
@@ -449,8 +465,14 @@ void HAL_TIM_PeriodElapsedCallback(TIM_HandleTypeDef *htim)
 		HAL_GPIO_WritePin(CTR_GPIO_Port, CTR_Pin, GPIO_PIN_SET);
 		HAL_GPIO_WritePin(B1_GPIO_Port, B1_Pin, GPIO_PIN_SET);
 		flag_pulse_Start = 1;
-	}
+	}*/
 
+	if(htim->Instance == htim17.Instance)
+	{
+		HAL_TIM_Base_Stop_IT(&htim17);
+		HAL_GPIO_WritePin(CTR_GPIO_Port, CTR_Pin, GPIO_PIN_SET);
+		HAL_GPIO_WritePin(B1_GPIO_Port, B1_Pin, GPIO_PIN_SET);
+	}
 }
 /* USER CODE END 4 */
 

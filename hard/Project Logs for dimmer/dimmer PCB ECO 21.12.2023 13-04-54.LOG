@@ -1,0 +1,34 @@
+Removed Pin From Net: NetName=L_1 Pin=R26-2
+Change Component Comment : Designator=C4 Old Comment=18112 4.7 uF New Comment=1812 4.7 uF
+Change Component Comment : Designator=C7 Old Comment=18112 4.7 uF New Comment=1812 4.7 uF
+Change Component Comment : Designator=J1 Old Comment=TB003-500-P02BE New Comment=KLS2-128I-5.00-02P-4S
+Change Component Comment : Designator=J2 Old Comment=TB003-500-P02BE New Comment=KLS2-128I-5.00-02P-4S
+Change Component Comment : Designator=J3 Old Comment=TB003-500-P02BE New Comment=KLS2-128I-5.00-02P-4S
+Change Component Comment : Designator=J4 Old Comment=TB003-500-P02BE New Comment=KLS2-128I-5.00-02P-4S
+Change Component Comment : Designator=J5 Old Comment=TB003-500-P02BE New Comment=KLS2-128I-5.00-02P-4S
+Change component parameters: Designator = "C4" ("C4"); Footprint = "CAPCHIP1812"; UniqueID = "\UZGTMTUQ" ("\UZGTMTUQ")
+Change component parameters (AddParameter): Name = "Body"; Value = "{Body}"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Class"; Value = "Электронные компоненты"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Installation"; Value = "{Installation}"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Nominal_voltage_V"; Value = "{Nominal_voltage_V}"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Ordering_Information"; Value = "{Ordering_Information}"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "1812"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Pins"; Value = "{Pins}"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "SubClass"; Value = "Конденсаторы"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "TKE"; Value = "{TKE}"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Tolerance_Percent"; Value = "{Tolerance_Percent}"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "1812 4.7 uF"; VariantName = "[No Variations]"
+Change component parameters: Designator = "C7" ("C7"); Footprint = "CAPCHIP1812"; UniqueID = "\LMWFRENN" ("\LMWFRENN")
+Change component parameters (AddParameter): Name = "Body"; Value = "{Body}"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Class"; Value = "Электронные компоненты"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Installation"; Value = "{Installation}"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Nominal_voltage_V"; Value = "{Nominal_voltage_V}"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Ordering_Information"; Value = "{Ordering_Information}"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Package"; Value = "1812"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Pins"; Value = "{Pins}"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "SubClass"; Value = "Конденсаторы"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "TKE"; Value = "{TKE}"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Tolerance_Percent"; Value = "{Tolerance_Percent}"; VariantName = "[No Variations]"
+Change component parameters (AddParameter): Name = "Value"; Value = "1812 4.7 uF"; VariantName = "[No Variations]"
+Added Pin To Net: NetName=L Pin=R26-2
+Change Net Name : Old Net Name=L_1 New Net Name=NetC9_1
