@@ -62,7 +62,7 @@ float Temperature = 0.0;
 uint8_t Presence = 0;
 uint8_t Temp_byte1, Temp_byte2;
 uint16_t TEMP;
-float setTEMP = 25.0;
+float setTEMP = 23.0;
 float stepTemp = 3.0;
 
 uint32_t oldTime = 0;
@@ -285,7 +285,7 @@ int main(void)
 				// если температура долго не меняется включить на максимум
 
 				// управление симистором
-				delay_dimm_us = (uint32_t)map(Temperature, setTEMP, setTEMP + 10, 0, 11000);
+				delay_dimm_us = (uint32_t)map(Temperature, setTEMP, setTEMP + 10, 11000, 0);
 
 				event_DS18B20 = 0;
 				break;
