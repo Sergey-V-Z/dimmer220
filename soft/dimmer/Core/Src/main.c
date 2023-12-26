@@ -41,6 +41,10 @@
 #define FAN_P3 3000;		// 70 %
 #define FAN_P4 2000;		// 80 %
 #define FAN_P5 5;		// 100 %
+
+#define SETTEMP 23
+#define ADDTEMP 10
+#define MAXTEMP SETTEMP + ADDTEMP
 /* USER CODE END PTD */
 
 /* Private define ------------------------------------------------------------*/
@@ -61,9 +65,11 @@ uint8_t flag_pulse_Start = 0;
 float Temperature = 0.0;
 uint8_t Presence = 0;
 uint8_t Temp_byte1, Temp_byte2;
+uint8_t one_wire_buff[9] = {0};
 uint16_t TEMP;
-float setTEMP = 23.0;
-float stepTemp = 3.0;
+float setTEMP = SETTEMP;
+//float stepTemp = 3.0;
+float maxTemp = MAXTEMP;
 
 uint32_t oldTime = 0;
 uint32_t time = 0;
@@ -187,6 +193,32 @@ uint8_t DS18B20_Read (void)
 	return value;
 }
 
+uint8_t _crc_ibutton_update(uint8_t crc, uint8_t data)
+{
+	uint8_t i;
+
+	crc = crc ^ data;
+	for (i = 0; i < 8; i++)
+	{
+		if (crc & 0x01)
+			crc = (crc >> 1) ^ 0x8C;
+		else
+			crc >>= 1;
+	}
+
+	return crc;
+}
+
+uint8_t one_wire_calc_crc(const void* data, size_t size)
+{
+	size_t i = 0;
+    uint8_t crc = 0;
+    for(i = 0; i < size; i ++){
+        crc = _crc_ibutton_update(crc, ((const uint8_t*)data)[i]);
+    }
+    return crc;
+}
+
 float map(float x, float in_min, float in_max, float out_min, float out_max)
 {
   return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min;
@@ -270,22 +302,37 @@ int main(void)
 					DS18B20_Write(0xCC);  // skip ROM
 					DS18B20_Write(0xBE);  // Read Scratch-pad
 
-					Temp_byte1 = DS18B20_Read();
-					Temp_byte2 = DS18B20_Read();
-					TEMP = (Temp_byte2 << 8) | Temp_byte1;
-					Temperature = (float) TEMP / 16;
+					//Temp_byte1 = DS18B20_Read();
+					//Temp_byte2 = DS18B20_Read();
+					for (int var = 0; var < 9; ++var) {
+						one_wire_buff[var] = DS18B20_Read();
+					}
 
+					if(one_wire_calc_crc(one_wire_buff, sizeof(one_wire_buff)) == 0)
+					{
+						TEMP = (one_wire_buff[1] << 8) | one_wire_buff[0];
+						Temperature = (float) TEMP / 16;
+						event_DS18B20 = 0;
+					}
+					else
+					{
+						event_DS18B20 = 4;
+					}
 					time_out_DS18B20 = 0;	// сброс таймера задержки
 					time_DS18B20 = 0;
 					time_DS18B20_Read = 0; // сброс таймера опроса
-					event_DS18B20 = 4;
+
 				}
 				break;
 			case 4:
 				// если температура долго не меняется включить на максимум
 
-				// управление симистором
-				delay_dimm_us = (uint32_t)map(Temperature, setTEMP, setTEMP + 10, 11000, 0);
+				if((Temperature < maxTemp) && (Temperature > setTEMP))
+				{
+					// управление симистором
+					delay_dimm_us = (uint32_t)map(Temperature, setTEMP, maxTemp, 11000, 0);
+				}
+
 
 				event_DS18B20 = 0;
 				break;
