@@ -42,7 +42,7 @@
 #define FAN_P4 2000;		// 80 %
 #define FAN_P5 5;		// 100 %
 
-#define SETTEMP 23
+#define SETTEMP 20
 #define ADDTEMP 10
 #define MAXTEMP SETTEMP + ADDTEMP
 /* USER CODE END PTD */
@@ -183,7 +183,7 @@ uint8_t DS18B20_Read (void)
 		delay (1);  // wait for > 1us
 
 		Set_Pin_Input(TX_1W_GPIO_Port, TX_1W_Pin);  // set as input
-		delay (15);
+		delay (5);
 		if (HAL_GPIO_ReadPin (TX_1W_GPIO_Port, TX_1W_Pin))  // if the pin is HIGH
 		{
 			value |= 1<<i;  // read = 1
@@ -312,7 +312,7 @@ int main(void)
 					{
 						TEMP = (one_wire_buff[1] << 8) | one_wire_buff[0];
 						Temperature = (float) TEMP / 16;
-						event_DS18B20 = 0;
+						event_DS18B20 = 4;
 					}
 					else
 					{
@@ -327,12 +327,16 @@ int main(void)
 			case 4:
 				// если температура долго не меняется включить на максимум
 
-				if((Temperature < maxTemp) && (Temperature > setTEMP))
+				if(Temperature < setTEMP)
 				{
-					// управление симистором
-					delay_dimm_us = (uint32_t)map(Temperature, setTEMP, maxTemp, 11000, 0);
+					Temperature = setTEMP;
 				}
-
+				if(Temperature > maxTemp)
+				{
+					Temperature = maxTemp;
+				}
+					// управление симистором
+					delay_dimm_us = (uint32_t)map(Temperature, setTEMP, maxTemp, 11000, 1);
 
 				event_DS18B20 = 0;
 				break;
