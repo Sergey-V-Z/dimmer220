@@ -35,15 +35,16 @@
 
 #define PERIOD_US 10000		// 10 ms
 #define DELAY_PULSE_US 5000 // 5 ms
-#define FAN_0 10000;		// 0 %
-#define FAN_P1 5000;		// 50 %
-#define FAN_P2 4000;		// 60 %
-#define FAN_P3 3000;		// 70 %
-#define FAN_P4 2000;		// 80 %
-#define FAN_P5 5;		// 100 %
+#define FAN_0 10000		// 0 %
+#define FAN_P1 5000		// 50 %
+#define FAN_P2 4000		// 60 %
+#define FAN_P3 3000		// 70 %
+#define FAN_P4 2000		// 80 %
+#define FAN_P5 5		// 100 %
 
-#define SETTEMP 20
-#define ADDTEMP 10
+#define FAN_START 8000 // 20 %
+#define SETTEMP 30
+#define ADDTEMP 5
 #define MAXTEMP SETTEMP + ADDTEMP
 /* USER CODE END PTD */
 
@@ -335,8 +336,9 @@ int main(void)
 				{
 					Temperature = maxTemp;
 				}
-					// управление симистором
-					delay_dimm_us = (uint32_t)map(Temperature, setTEMP, maxTemp, 11000, 1);
+
+				// управление симистором
+				delay_dimm_us = (uint32_t)map(Temperature, setTEMP, maxTemp, FAN_START, 1);
 
 				event_DS18B20 = 0;
 				break;
