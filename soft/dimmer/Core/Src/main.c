@@ -42,7 +42,7 @@
 #define FAN_P4 2000		// 80 %
 #define FAN_P5 5		// 100 %
 
-#define FAN_START 8000 // 20 %
+#define FAN_START 7000 // 30 %
 #define SETTEMP 30
 #define ADDTEMP 5
 #define MAXTEMP SETTEMP + ADDTEMP
@@ -330,7 +330,7 @@ int main(void)
 
 				if(Temperature < setTEMP)
 				{
-					Temperature = setTEMP;
+					Temperature = 0;
 				}
 				if(Temperature > maxTemp)
 				{
@@ -338,7 +338,7 @@ int main(void)
 				}
 
 				// управление симистором
-				delay_dimm_us = (uint32_t)map(Temperature, setTEMP, maxTemp, FAN_START, 1);
+				delay_dimm_us = (uint32_t)map(Temperature, setTEMP, maxTemp, 11000, 1);
 
 				event_DS18B20 = 0;
 				break;
