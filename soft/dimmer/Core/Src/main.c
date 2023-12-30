@@ -44,7 +44,7 @@
 
 #define FAN_START 7000 // 30 %
 #define SETTEMP 30
-#define ADDTEMP 5
+#define ADDTEMP 15
 #define MAXTEMP SETTEMP + ADDTEMP
 /* USER CODE END PTD */
 
@@ -84,7 +84,7 @@ uint32_t time_Dimmer = 0;
 //uint32_t time_Dimmer_Pulse = 0;
 uint32_t time_out_dimmer = 20; // 20 mS не включается семистор 0 включен постоянно
 uint8_t event_dimmer = 0;
-uint32_t delay_dimm_us = 5000; // 10000 us = 10 ms
+uint32_t delay_dimm_us = 11000; // 10000 us = 10 ms
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -330,15 +330,20 @@ int main(void)
 
 				if(Temperature < setTEMP)
 				{
-					Temperature = 0;
+					//Temperature = 0;
+					delay_dimm_us = 11000;
 				}
-				if(Temperature > maxTemp)
+				else if(Temperature > maxTemp)
 				{
 					Temperature = maxTemp;
+					delay_dimm_us = 1;
+				}else
+				{
+					// управление симистором
+					delay_dimm_us = (uint32_t)map(Temperature, setTEMP, maxTemp, FAN_START, 1);
 				}
 
-				// управление симистором
-				delay_dimm_us = (uint32_t)map(Temperature, setTEMP, maxTemp, 11000, 1);
+
 
 				event_DS18B20 = 0;
 				break;
